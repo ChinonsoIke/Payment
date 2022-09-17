@@ -1,5 +1,6 @@
 ﻿using Raven.Client.Documents;
 using Serilog;
+using Serilog.Exceptions;
 using Serilog.Events;
 using System.Security.Cryptography.X509Certificates;
 
@@ -27,6 +28,9 @@ namespace Payment.API.Extensions
                     rollingInterval: RollingInterval.Day,
                     restrictedToMinimumLevel: LogEventLevel.Information
                 )
+                .Enrich.WithExceptionDetails()
+                .Enrich.WithProcessId()
+                .Enrich.WithProcessName()
                 .WriteTo.RavenDB(ravenStore)
                 .CreateLogger();
         }
