@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Payment.Core.Interfaces;
+using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Payment.Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly PaymentDbContext _dbContext;
         private readonly DbSet<T> _entityDbSet;
@@ -32,7 +33,8 @@ namespace Payment.Infrastructure.Repositories
 
         public async Task DeleteRangeAsync(IEnumerable<string> ids)
         {
-            //var entities = await _entityDbSet.Where(e => ids.Contains(e.Id));
+            var entities = _entityDbSet.Where(e => ids.Contains(e.Id));
+            _entityDbSet.RemoveRange(entities);
         }
 
         public void Update(T item)
