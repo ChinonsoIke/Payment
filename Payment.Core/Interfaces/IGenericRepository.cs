@@ -27,13 +27,13 @@ namespace Payment.Core.Interfaces
         /// </summary>
         /// <param name="id">ID of the object to be deleted from the database context</param>
         /// <returns></returns>
-        public Task DeleteAsync(string id);
+        public void Delete(T entity);
 
         /// <summary>
         /// Deletes a range of objects of type T from the database context
         /// </summary>
         /// <param name="ids">List of IDs of entities to be deleted from the database context</param>
         /// <returns></returns>
-        public Task DeleteRangeAsync(IEnumerable<string> ids);
+        public void DeleteRange(IEnumerable<T> entities);
     }
 }

@@ -12,7 +12,7 @@ namespace Payment.Core.DTOs
     {
         public int StatusCode { get; set; }
         public bool Status { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } = null!;
         public T Data { get; set; }
         public static ResponseDto<T> Fail(string errorMessage, int statusCode = (int)HttpStatusCode.NotFound)
         {

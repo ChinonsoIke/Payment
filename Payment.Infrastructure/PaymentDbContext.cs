@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Payment.Domain.Common;
 using Payment.Domain.Models;
 
 namespace Payment.Infrastructure
 {
     public class PaymentDbContext : DbContext
     {
-        public PaymentDbContext(DbContextOptions<PaymentDbContext> options) : base(options)
-        {
-
-        }
+        public PaymentDbContext(DbContextOptions<PaymentDbContext> options) 
+            : base(options) { }
+        
         public DbSet<Bank> Banks { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<VirtualAccount> VirtualAccounts { get; set; }

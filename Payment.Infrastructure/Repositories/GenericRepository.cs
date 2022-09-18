@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Payment.Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly PaymentDbContext _dbContext;
         private readonly DbSet<T> _entityDbSet;
@@ -25,15 +25,13 @@ namespace Payment.Infrastructure.Repositories
             await _entityDbSet.AddAsync(item);
         }
 
-        public async Task DeleteAsync(string id)
+        public void Delete(T entity)
         {
-            var entity = await _entityDbSet.FindAsync(id);
             _entityDbSet.Remove(entity);
         }
 
-        public async Task DeleteRangeAsync(IEnumerable<string> ids)
+        public void DeleteRange(IEnumerable<T> entities)
         {
-            var entities = _entityDbSet.Where(e => ids.Contains(e.Id));
             _entityDbSet.RemoveRange(entities);
         }
 
