@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Payment.Core.Interfaces;
+using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,14 @@ namespace Payment.Infrastructure.Repositories
             await _entityDbSet.AddAsync(item);
         }
 
-        public async Task DeleteAsync(string id)
+        public void Delete(T entity)
         {
-            var entity = await _entityDbSet.FindAsync(id);
             _entityDbSet.Remove(entity);
         }
 
-        public async Task DeleteRangeAsync(IEnumerable<string> ids)
+        public void DeleteRange(IEnumerable<T> entities)
         {
-            //var entities = await _entityDbSet.Where(e => ids.Contains(e.Id));
+            _entityDbSet.RemoveRange(entities);
         }
 
         public void Update(T item)

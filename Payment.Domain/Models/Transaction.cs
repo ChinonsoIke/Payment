@@ -1,24 +1,19 @@
-﻿using Payment.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Payment.Domain.Common;
+using Payment.Domain.Enums;
 
 namespace Payment.Domain.Models
 {
     public class Transaction : BaseEntity
     {
         public decimal Amount { get; set; }
-        public string Reference { get; set; }
+        public string Reference { get; set; } = null!;
         public TransactionStatus Status { get; set; }
         public TransactionType Type { get; set; }
         public bool IsInternal { get; set; } = true;
-        public string Description { get; set; }
-        public string UserId { get; set; }
-        public string WalletId { get; set; }
+        public string Description { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+        public string WalletId { get; set; } = null!;
 
-        //public User User { get; set; }
-        public Wallet Wallet { get; set; }
+        public Wallet Wallet { get; set; } = null!;
     }
 }

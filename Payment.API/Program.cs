@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Payment.API.Extensions;
+using Payment.Core;
 using Payment.Infrastructure;
 using Serilog;
 
@@ -20,22 +21,22 @@ try
     // Add services to the container.
 
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-
-    builder.Services.AddDbContext<PaymentDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+    builder.Services.AddPaymentInfrastructure(config);
+    builder.Services.AddApplicationLayer();
 
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseDeveloperExceptionPage();
     }
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.UseHttpsRedirection();
 
@@ -47,7 +48,7 @@ try
 }
 catch (Exception e)
 {
-    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly");
+    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly"); 
 }
 finally
 {

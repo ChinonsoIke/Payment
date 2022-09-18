@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Payment.Domain.Common;
 
 namespace Payment.Domain.Models
 {
     public class Bank : BaseEntity
     {
-        public string BankCode { get; set; }
-        public string BankName { get; set; }
-        public string CountryCode { get; set; }
+        public string BankCode { get; set; } = null!;
+        public string BankName { get; set; } = null!;
+        public string CountryCode { get; set; } = null!;
 
-        public VirtualAccount VirtualAccount { get; set; }
-        public BankAccount BankAccount { get; set; }
+        public VirtualAccount VirtualAccount { get; set; } = null!;
+        public BankAccount BankAccount { get; set; } = null!;
     }
 }

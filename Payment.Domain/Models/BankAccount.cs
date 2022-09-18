@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Payment.Domain.Common;
 
 namespace Payment.Domain.Models
 {
     public class BankAccount : BaseEntity
     {
-        public string AccountNumber { get; set; }
-        public string AccountName { get; set; }
-        public string BankId { get; set; }
-        public string WalletId { get; set; }
-        public string UserId { get; set; }
+        public string AccountNumber { get; set; } = null!;
+        public string AccountName { get; set; } = null!;
+        public string BankId { get; set; } = null!;
+        public string WalletId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
 
-        public Bank Bank { get; set; }
-        public Wallet Wallet { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
-        //public using User { get; set; }
+        public Bank Bank { get; set; } = null!;
+        public Wallet Wallet { get; set; } = null!;
+        public ICollection<Transaction> Transactions { get; set; } = null!;
     }
 }
