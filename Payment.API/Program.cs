@@ -71,7 +71,7 @@ try
 }
 catch (Exception e)
 {
-    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly");
+    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly"); 
 }
 finally
 {
