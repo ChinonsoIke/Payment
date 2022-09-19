@@ -13,7 +13,7 @@ namespace Payment.Infrastructure.Repositories
         private BankAccountRepository _bankAccounts { get; set; } = null!;
         private BankRepository _banks { get; set; } = null!;
         private TransactionRepository _transactions { get; set; } = null!;
-        //private TransferBeneficiaryRepository _beneficiaries { get; } = null!;
+        private TransferBeneficiaryRepository _beneficiaries { get; set; } = null!;
         private VirtualAccountRepository _virtualAccounts { get; set; } = null!;
         private WalletRepository _wallets { get; set; } = null!;
 
@@ -31,6 +31,8 @@ namespace Payment.Infrastructure.Repositories
         public IVirtualAccountRepository VirtualAccounts => _virtualAccounts ??= new VirtualAccountRepository(_context);
 
         public IWalletRepository Wallets => _wallets ??= new WalletRepository(_context);
+
+        public ITransferBeneficiaryRepository TransferBeneficiaries => _beneficiaries ??= new TransferBeneficiaryRepository(_context);
 
         public void Dispose()
         {
