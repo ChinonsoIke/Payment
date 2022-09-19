@@ -22,7 +22,7 @@ try
 
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerExtension();
 
     builder.Services.AddPaymentInfrastructure(config);
     builder.Services.AddApplicationLayer();
@@ -33,10 +33,8 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
+        app.UseSwaggerExtension();
     }
-
-    app.UseSwagger();
-    app.UseSwaggerUI();
 
     app.UseHttpsRedirection();
 
