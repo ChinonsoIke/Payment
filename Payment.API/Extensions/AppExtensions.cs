@@ -4,7 +4,12 @@
     {
         public static void UseSwaggerExtension(this IApplicationBuilder app)
         {
-            // Add Swagger configuration here
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Payment API V1");
+            });
         }
     }
 }
