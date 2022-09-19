@@ -1,13 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Payment.Core.Interfaces;
 using Payment.Core.Services;
+using System.Reflection;
 
 namespace Payment.Core
 {

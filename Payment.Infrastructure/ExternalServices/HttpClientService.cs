@@ -39,7 +39,13 @@ namespace Payment.Infrastructure.ExternalServices
             var response = await client.SendAsync(request);
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<TRes>(responseString);
-            return response.IsSuccessStatusCode ? result : throw new ArgumentException(response.ReasonPhrase);
+
+            if(result != null && response.IsSuccessStatusCode)
+            {
+                return result;
+            }
+
+            throw new ArgumentException(response.ReasonPhrase);
         }
         private HttpClient CreateClient(string baseUrl, string token)
         {

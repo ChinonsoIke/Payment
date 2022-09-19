@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Payment.Core.DTOs;
+using Payment.Core.DTOs.PaystackDtos;
 
 namespace Payment.Core.Interfaces
 {
     public interface IVirtualAccountService
     {
+        public Task CreateVirtualAccount
+            (PaystackVirtualAccountResponseData data);
     }
 }
