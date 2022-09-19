@@ -18,7 +18,7 @@ namespace Payment.API.Extensions
                     Contact = new OpenApiContact
                     {
                         Name = "Fintech Web-API",
-                        Email = "info@fintech.com",
+                        Email = "",
                     }
                 });
                 // To Enable authorization using Swagger (JWT) 

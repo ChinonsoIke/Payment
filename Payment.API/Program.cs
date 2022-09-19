@@ -33,8 +33,9 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
-        app.UseSwaggerExtension();
     }
+
+    app.UseSwaggerExtension();
 
     app.UseHttpsRedirection();
 
@@ -46,7 +47,7 @@ try
 }
 catch (Exception e)
 {
-    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly"); 
+    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly");
 }
 finally
 {
