@@ -9,6 +9,6 @@ namespace Payment.Domain.Models
         public string CountryCode { get; set; } = null!;
 
         public VirtualAccount VirtualAccount { get; set; } = null!;
-        public BankAccount BankAccount { get; set; } = null!;
+        public ICollection<BankAccount> BankAccounts { get; set; } = null!;
     }
 }

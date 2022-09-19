@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using System.Reflection;
 using Payment.Core.Interfaces;
 using Payment.Core.Services;
-using System.Reflection;
 
 namespace Payment.Core
 {

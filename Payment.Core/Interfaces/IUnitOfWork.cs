@@ -10,6 +10,7 @@ namespace Payment.Core.Interfaces
     {
         IBankAccountRepository BankAccounts { get; }
         IBankRepository Banks { get; }
+        ITransferBeneficiaryRepository TransferBeneficiaries { get; }
         ITransactionRepository Transactions { get; }
         IVirtualAccountRepository VirtualAccounts { get; }
         IWalletRepository Wallets { get; }
