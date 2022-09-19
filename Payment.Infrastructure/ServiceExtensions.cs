@@ -23,7 +23,9 @@ namespace Payment.Infrastructure
             services.AddScoped<IVirtualAccountRepository, VirtualAccountRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddHttpClient<IHttpClientService, HttpClientService>();
+            services.AddScoped<IHttpClientService, HttpClientService>();
             services.AddScoped<IPaystackService, PaystackService>();
+            //services.AddHttpClient();
         }
     }
 }

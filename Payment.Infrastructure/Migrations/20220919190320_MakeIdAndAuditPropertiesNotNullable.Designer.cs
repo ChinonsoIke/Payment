@@ -12,8 +12,8 @@ using Payment.Infrastructure;
 namespace Payment.Infrastructure.Migrations
 {
     [DbContext(typeof(PaymentDbContext))]
-    [Migration("20220919133256_AddBeneficiaryRerun")]
-    partial class AddBeneficiaryRerun
+    [Migration("20220919190320_MakeIdAndAuditPropertiesNotNullable")]
+    partial class MakeIdAndAuditPropertiesNotNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,11 +30,9 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("BankCode")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -186,7 +184,6 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("AccountReference")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("BankId")

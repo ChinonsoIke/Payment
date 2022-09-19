@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Payment.Infrastructure.Migrations
 {
-    public partial class AddBeneficiaryRerun : Migration
+    public partial class MakeIdAndAuditPropertiesNotNullable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,9 @@ namespace Payment.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    BankCode = table.Column<string>(type: "text", nullable: false),
+                    BankCode = table.Column<string>(type: "text", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    CountryCode = table.Column<string>(type: "text", nullable: false),
+                    CountryCode = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
@@ -97,7 +97,7 @@ namespace Payment.Infrastructure.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     AccountName = table.Column<string>(type: "text", nullable: false),
                     AccountNumber = table.Column<string>(type: "text", nullable: false),
-                    AccountReference = table.Column<string>(type: "text", nullable: false),
+                    AccountReference = table.Column<string>(type: "text", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     BankId = table.Column<string>(type: "text", nullable: false),
                     WalletId = table.Column<string>(type: "text", nullable: false),

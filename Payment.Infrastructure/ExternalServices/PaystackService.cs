@@ -22,11 +22,12 @@ namespace Payment.Infrastructure.ExternalServices
         public async Task<ResponseDto<PaystackVirtualAccountResponseData>> CreateVirtualAccount(VirtualAccountRequestDto virtualAccountRequestDto)
         {
             var secretKey = _config["PaystackSettings:SecretKey"];
-            var baseUrl = _config["BaseUrl"];
+            var baseUrl = _config["PaystackSettings:BaseUrl"];
+            // Endpoint I need
             var url = $"{baseUrl}/dedicated_account";
 
             var response = await _httpClientService.PostRequestAsync
-                <VirtualAccountRequestDto, PaystackVirtualAccountResponseDto>
+                <VirtualAccountRequestDto, PaystackGenericResponseDto<PaystackVirtualAccountResponseData>>
                 (baseUrl, url, virtualAccountRequestDto, secretKey);
             if (response.Status)
             {
