@@ -19,6 +19,7 @@ namespace Payment.Infrastructure
         public DbSet<VirtualAccount> VirtualAccounts { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransferBeneficiary> TransferBeneficiaries { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

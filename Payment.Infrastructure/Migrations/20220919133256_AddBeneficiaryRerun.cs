@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Payment.Infrastructure.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class AddBeneficiaryRerun : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace Payment.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     BankCode = table.Column<string>(type: "text", nullable: false),
-                    BankName = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     CountryCode = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
@@ -31,8 +31,7 @@ namespace Payment.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    AvailableBalance = table.Column<decimal>(type: "numeric", nullable: false),
-                    UnsettledCash = table.Column<decimal>(type: "numeric", nullable: false),
+                    Balance = table.Column<decimal>(type: "numeric", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
@@ -50,8 +49,6 @@ namespace Payment.Infrastructure.Migrations
                     AccountNumber = table.Column<string>(type: "text", nullable: false),
                     AccountName = table.Column<string>(type: "text", nullable: false),
                     BankId = table.Column<string>(type: "text", nullable: false),
-                    WalletId = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
@@ -64,8 +61,29 @@ namespace Payment.Infrastructure.Migrations
                         principalTable: "Banks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    Reference = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    IsInternal = table.Column<bool>(type: "boolean", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    WalletId = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BankAccounts_Wallets_WalletId",
+                        name: "FK_Transactions_Wallets_WalletId",
                         column: x => x.WalletId,
                         principalTable: "Wallets",
                         principalColumn: "Id",
@@ -105,32 +123,28 @@ namespace Payment.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: "TransferBeneficiaries",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    Reference = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    IsInternal = table.Column<bool>(type: "boolean", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    RecipientCode = table.Column<string>(type: "text", nullable: false),
                     WalletId = table.Column<string>(type: "text", nullable: false),
-                    BankAccountId = table.Column<string>(type: "text", nullable: true),
+                    IsInternal = table.Column<bool>(type: "boolean", nullable: false),
+                    BankAccountId = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.PrimaryKey("PK_TransferBeneficiaries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_BankAccounts_BankAccountId",
+                        name: "FK_TransferBeneficiaries_BankAccounts_BankAccountId",
                         column: x => x.BankAccountId,
                         principalTable: "BankAccounts",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_Wallets_WalletId",
+                        name: "FK_TransferBeneficiaries_Wallets_WalletId",
                         column: x => x.WalletId,
                         principalTable: "Wallets",
                         principalColumn: "Id",
@@ -140,19 +154,7 @@ namespace Payment.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccounts_BankId",
                 table: "BankAccounts",
-                column: "BankId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BankAccounts_WalletId",
-                table: "BankAccounts",
-                column: "WalletId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_BankAccountId",
-                table: "Transactions",
-                column: "BankAccountId");
+                column: "BankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_WalletId",
@@ -160,10 +162,20 @@ namespace Payment.Infrastructure.Migrations
                 column: "WalletId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TransferBeneficiaries_BankAccountId",
+                table: "TransferBeneficiaries",
+                column: "BankAccountId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransferBeneficiaries_WalletId",
+                table: "TransferBeneficiaries",
+                column: "WalletId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VirtualAccounts_BankId",
                 table: "VirtualAccounts",
-                column: "BankId",
-                unique: true);
+                column: "BankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VirtualAccounts_WalletId",
@@ -178,16 +190,19 @@ namespace Payment.Infrastructure.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
+                name: "TransferBeneficiaries");
+
+            migrationBuilder.DropTable(
                 name: "VirtualAccounts");
 
             migrationBuilder.DropTable(
                 name: "BankAccounts");
 
             migrationBuilder.DropTable(
-                name: "Banks");
+                name: "Wallets");
 
             migrationBuilder.DropTable(
-                name: "Wallets");
+                name: "Banks");
         }
     }
 }

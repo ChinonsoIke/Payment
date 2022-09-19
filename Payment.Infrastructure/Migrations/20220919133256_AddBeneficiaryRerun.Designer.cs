@@ -12,8 +12,8 @@ using Payment.Infrastructure;
 namespace Payment.Infrastructure.Migrations
 {
     [DbContext(typeof(PaymentDbContext))]
-    [Migration("20220916191159_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220919133256_AddBeneficiaryRerun")]
+    partial class AddBeneficiaryRerun
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,10 +33,6 @@ namespace Payment.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("BankName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("CountryCode")
                         .IsRequired()
                         .HasColumnType("text");
@@ -44,6 +40,10 @@ namespace Payment.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -79,21 +79,9 @@ namespace Payment.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("WalletId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId")
-                        .IsUnique();
-
-                    b.HasIndex("WalletId")
-                        .IsUnique();
+                    b.HasIndex("BankId");
 
                     b.ToTable("BankAccounts");
                 });
@@ -105,9 +93,6 @@ namespace Payment.Infrastructure.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("BankAccountId")
-                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -144,11 +129,47 @@ namespace Payment.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankAccountId");
-
                     b.HasIndex("WalletId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("Payment.Domain.Models.TransferBeneficiary", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BankAccountId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsInternal")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RecipientCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("WalletId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankAccountId")
+                        .IsUnique();
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("TransferBeneficiaries");
                 });
 
             modelBuilder.Entity("Payment.Domain.Models.VirtualAccount", b =>
@@ -193,8 +214,7 @@ namespace Payment.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId")
-                        .IsUnique();
+                    b.HasIndex("BankId");
 
                     b.HasIndex("WalletId")
                         .IsUnique();
@@ -207,7 +227,7 @@ namespace Payment.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("AvailableBalance")
+                    b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -217,9 +237,6 @@ namespace Payment.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<decimal>("UnsettledCash")
-                        .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -237,30 +254,18 @@ namespace Payment.Infrastructure.Migrations
             modelBuilder.Entity("Payment.Domain.Models.BankAccount", b =>
                 {
                     b.HasOne("Payment.Domain.Models.Bank", "Bank")
-                        .WithOne("BankAccount")
-                        .HasForeignKey("Payment.Domain.Models.BankAccount", "BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Payment.Domain.Models.Wallet", "Wallet")
-                        .WithOne("BankAccount")
-                        .HasForeignKey("Payment.Domain.Models.BankAccount", "WalletId")
+                        .WithMany("BankAccounts")
+                        .HasForeignKey("BankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Bank");
-
-                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Payment.Domain.Models.Transaction", b =>
                 {
-                    b.HasOne("Payment.Domain.Models.BankAccount", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("BankAccountId");
-
                     b.HasOne("Payment.Domain.Models.Wallet", "Wallet")
-                        .WithMany("Payments")
+                        .WithMany("Transactions")
                         .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -268,11 +273,30 @@ namespace Payment.Infrastructure.Migrations
                     b.Navigation("Wallet");
                 });
 
+            modelBuilder.Entity("Payment.Domain.Models.TransferBeneficiary", b =>
+                {
+                    b.HasOne("Payment.Domain.Models.BankAccount", "BankAccount")
+                        .WithOne("Beneficiary")
+                        .HasForeignKey("Payment.Domain.Models.TransferBeneficiary", "BankAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Payment.Domain.Models.Wallet", "Wallet")
+                        .WithMany("Beneficiaries")
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BankAccount");
+
+                    b.Navigation("Wallet");
+                });
+
             modelBuilder.Entity("Payment.Domain.Models.VirtualAccount", b =>
                 {
                     b.HasOne("Payment.Domain.Models.Bank", "Bank")
-                        .WithOne("VirtualAccount")
-                        .HasForeignKey("Payment.Domain.Models.VirtualAccount", "BankId")
+                        .WithMany("VirtualAccounts")
+                        .HasForeignKey("BankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -289,24 +313,22 @@ namespace Payment.Infrastructure.Migrations
 
             modelBuilder.Entity("Payment.Domain.Models.Bank", b =>
                 {
-                    b.Navigation("BankAccount")
-                        .IsRequired();
+                    b.Navigation("BankAccounts");
 
-                    b.Navigation("VirtualAccount")
-                        .IsRequired();
+                    b.Navigation("VirtualAccounts");
                 });
 
             modelBuilder.Entity("Payment.Domain.Models.BankAccount", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Beneficiary")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Payment.Domain.Models.Wallet", b =>
                 {
-                    b.Navigation("BankAccount")
-                        .IsRequired();
+                    b.Navigation("Beneficiaries");
 
-                    b.Navigation("Payments");
+                    b.Navigation("Transactions");
 
                     b.Navigation("VirtualAccount")
                         .IsRequired();
