@@ -13,12 +13,9 @@ namespace Payment.Domain.Models
         public string RecipientCode { get; set; } = null!;
         public string WalletId { get; set; } = null!;
         public bool IsInternal { get; set; }
-        public string BankAccountId { get; set; }
+        public string BankAccountId { get; set; } = null!;
 
         public BankAccount BankAccount { get; set; } = null!;
         public Wallet Wallet { get; set; } = null!;
     }
 }
-
-//recipient code
-//new bank, new bank account, new beneficiary, save changes
