@@ -9,15 +9,28 @@ namespace Payment.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IBankAccountRepository BankAccounts => throw new NotImplementedException();
+        private readonly PaymentDbContext _context;
+        private BankAccountRepository _bankAccounts { get; set; } = null!;
+        private BankRepository _banks { get; set; } = null!;
+        private TransactionRepository _transactions { get; set; } = null!;
+        //private TransferBeneficiaryRepository _beneficiaries { get; } = null!;
+        private VirtualAccountRepository _virtualAccounts { get; set; } = null!;
+        private WalletRepository _wallets { get; set; } = null!;
 
-        public IBankRepository Banks => throw new NotImplementedException();
+        public UnitOfWork(PaymentDbContext context)
+        {
+            _context = context;
+        }
 
-        public ITransactionRepository Transactions => throw new NotImplementedException();
+        public IBankAccountRepository BankAccounts => _bankAccounts ??= new BankAccountRepository(_context);
 
-        public IVirtualAccountRepository VirtualAccounts => throw new NotImplementedException();
+        public IBankRepository Banks => _banks ??= new BankRepository(_context);
 
-        public IWalletRepository Wallets => throw new NotImplementedException();
+        public ITransactionRepository Transactions => _transactions ??= new TransactionRepository(_context);
+
+        public IVirtualAccountRepository VirtualAccounts => _virtualAccounts ??= new VirtualAccountRepository(_context);
+
+        public IWalletRepository Wallets => _wallets ??= new WalletRepository(_context);
 
         public void Dispose()
         {

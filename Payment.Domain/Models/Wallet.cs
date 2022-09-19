@@ -9,7 +9,6 @@ namespace Payment.Domain.Models
         public string UserId { get; set; } = null!;
 
         public VirtualAccount VirtualAccount { get; set; } = null!;
-        public BankAccount BankAccount { get; set; } = null!;
-        public ICollection<Transaction> Payments { get; set; } = null!;
+        public ICollection<TransferBeneficiary> Beneficiaries { get; set; } = null!;
     }
 }
