@@ -22,7 +22,7 @@ try
 
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerExtension();
 
     builder.Services.AddPaymentInfrastructure(config);
     builder.Services.AddApplicationLayer();
@@ -35,8 +35,7 @@ try
         app.UseDeveloperExceptionPage();
     }
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerExtension();
 
     app.UseHttpsRedirection();
 
@@ -48,7 +47,7 @@ try
 }
 catch (Exception e)
 {
-    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly"); 
+    Log.Logger.Fatal(e.StackTrace, "The application failed to start correctly");
 }
 finally
 {
