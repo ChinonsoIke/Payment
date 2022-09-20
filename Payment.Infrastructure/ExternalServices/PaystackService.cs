@@ -36,7 +36,7 @@ namespace Payment.Infrastructure.ExternalServices
                 response.Data.WalletId = virtualAccountRequestDto.WalletId;
                 await _virtualAccountService.CreateVirtualAccount(response.Data);
                 return ResponseDto<PaystackVirtualAccountResponseData>.Success(
-                    "Virtual successfully generated",  response.Data, 201);
+                    "Virtual successfully generated",  null, 201);
             }
 
             return ResponseDto<PaystackVirtualAccountResponseData>.Fail("Could not create virtual account", 417);

@@ -18,7 +18,7 @@ namespace Payment.Core.Services
         }
         public async Task CreateVirtualAccount(PaystackVirtualAccountResponseData data)
         {
-            var bank = await _unitOfWork.Banks.Get(x => x.Name == data.Bank.Name);
+            var bank = await _unitOfWork.Banks.Get(x => x.PaystackBankId == data.Bank.PaystackBankId);
             if(bank == null)
             {
                 var newBank = _mapper.Map<Bank>(data.Bank);
