@@ -11,5 +11,7 @@ namespace Payment.Core.DTOs.PaystackDtos
     {
         [JsonProperty("name")]
         public string Name { get; set; } = null!;
+        [JsonProperty("id")]
+        public int PaystackBankId { get; set; }
     }
 }

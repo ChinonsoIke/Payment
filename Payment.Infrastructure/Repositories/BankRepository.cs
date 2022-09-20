@@ -1,4 +1,5 @@
-﻿using Payment.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Payment.Core.Interfaces;
 using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,14 @@ namespace Payment.Infrastructure.Repositories
             _context = dbContext;
         }
 
-        public IQueryable<Bank> Get(Expression<Func<Bank, bool>> expression)
+        public async Task<Bank> Get(Expression<Func<Bank, bool>> expression)
         {
-            return _context.Banks.Where(expression);
+            return await _context.Banks.FirstOrDefaultAsync(expression);
+        }
+
+        public IQueryable<Bank> GetAll(Expression<Func<Bank, bool>> expression = null)
+        {
+            return _context.Banks;
         }
     }
 }

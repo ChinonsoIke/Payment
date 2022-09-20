@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Payment.Core.DTOs;
 using Payment.Core.DTOs.PaystackDtos;
+using Payment.Core.DTOs.VirtualAccountDtos;
 using Payment.Core.Interfaces;
 
 namespace Payment.Infrastructure.ExternalServices

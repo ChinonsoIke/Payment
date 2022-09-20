@@ -10,6 +10,7 @@ namespace Payment.Core.Interfaces
 {
     public interface IBankRepository : IGenericRepository<Bank>
     {
-        IQueryable<Bank> Get(Expression<Func<Bank, bool>> expression);
+        Task<Bank> Get(Expression<Func<Bank, bool>> expression);
+        IQueryable<Bank> GetAll(Expression<Func<Bank, bool>> expression=null);
     }
 }

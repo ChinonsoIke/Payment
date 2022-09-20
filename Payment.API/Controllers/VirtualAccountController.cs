@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Payment.Core.DTOs;
+using Payment.Core.DTOs.VirtualAccountDtos;
 using Payment.Core.Interfaces;
 using System.Net.Mime;
 

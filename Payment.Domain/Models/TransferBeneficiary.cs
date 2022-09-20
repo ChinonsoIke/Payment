@@ -15,7 +15,7 @@ namespace Payment.Domain.Models
         public bool IsInternal { get; set; }
         public string BankAccountId { get; set; } = null!;
 
-        public BankAccount BankAccount { get; set; } = null!;
-        public Wallet Wallet { get; set; } = null!;
+        public BankAccount? BankAccount { get; set; }
+        public Wallet? Wallet { get; set; }
     }
 }

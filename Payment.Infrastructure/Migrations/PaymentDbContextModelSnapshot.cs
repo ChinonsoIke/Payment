@@ -34,15 +34,16 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("PaystackBankId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -68,11 +69,9 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -91,18 +90,15 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsInternal")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Reference")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Status")
@@ -112,12 +108,7 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("WalletId")
                         .IsRequired()
@@ -140,7 +131,6 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsInternal")
@@ -151,7 +141,6 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("WalletId")
@@ -189,19 +178,13 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("WalletId")
                         .IsRequired()
@@ -226,7 +209,6 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -234,7 +216,6 @@ namespace Payment.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserId")
@@ -315,8 +296,7 @@ namespace Payment.Infrastructure.Migrations
 
             modelBuilder.Entity("Payment.Domain.Models.BankAccount", b =>
                 {
-                    b.Navigation("Beneficiary")
-                        .IsRequired();
+                    b.Navigation("Beneficiary");
                 });
 
             modelBuilder.Entity("Payment.Domain.Models.Wallet", b =>
@@ -325,8 +305,7 @@ namespace Payment.Infrastructure.Migrations
 
                     b.Navigation("Transactions");
 
-                    b.Navigation("VirtualAccount")
-                        .IsRequired();
+                    b.Navigation("VirtualAccount");
                 });
 #pragma warning restore 612, 618
         }

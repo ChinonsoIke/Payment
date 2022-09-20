@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
-namespace Payment.Core.DTOs
+namespace Payment.Core.DTOs.VirtualAccountDtos
 {
     public class VirtualAccountRequestDto
     {
+        [JsonProperty("customer")]
         public string PaystackCustomerId { get; set; } = null!;
         public string WalletId { get; set; } = null!;
         public string UserId { get; set; } = null!;
+        [JsonProperty("preferred_bank")]
         public string PreferredBank { get; set; } = "test-bank";
     }
 }

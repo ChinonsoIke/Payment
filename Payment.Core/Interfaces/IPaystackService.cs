@@ -1,5 +1,6 @@
 ﻿using Payment.Core.DTOs;
 using Payment.Core.DTOs.PaystackDtos;
+using Payment.Core.DTOs.VirtualAccountDtos;
 
 namespace Payment.Core.Interfaces
 {

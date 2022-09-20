@@ -8,7 +8,7 @@ namespace Payment.Domain.Models
         public string AccountName { get; set; } = null!;
         public string BankId { get; set; } = null!;
 
-        public Bank Bank { get; set; } = null!;
-        public TransferBeneficiary Beneficiary { get; set; } = null!;
+        public Bank? Bank { get; set; }
+        public TransferBeneficiary? Beneficiary { get; set; }
     }
 }

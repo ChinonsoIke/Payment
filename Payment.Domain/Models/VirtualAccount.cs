@@ -7,13 +7,12 @@ namespace Payment.Domain.Models
     {
         public string AccountName { get; set; } = null!;
         public string AccountNumber { get; set; } = null!;
-        public string AccountReference { get; set; } = null!;
+        public string? AccountReference { get; set; }
         public VirtualAccountStatus Status { get; set; } = VirtualAccountStatus.Active;
         public string BankId { get; set; } = null!;
         public string WalletId { get; set; } = null!;
-        public string UserId { get; set; } = null!;
 
-        public Wallet Wallet { get; set; } = null!;
-        public Bank Bank { get; set; } = null!;
+        public Wallet? Wallet { get; set; }
+        public Bank? Bank { get; set; }
     }
 }

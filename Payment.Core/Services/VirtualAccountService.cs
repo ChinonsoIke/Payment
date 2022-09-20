@@ -18,14 +18,20 @@ namespace Payment.Core.Services
         }
         public async Task CreateVirtualAccount(PaystackVirtualAccountResponseData data)
         {
-            var bank = _unitOfWork.Banks.Get(x => x.Name == data.Bank.Name);
+            var bank = await _unitOfWork.Banks.Get(x => x.Name == data.Bank.Name);
             if(bank == null)
             {
-                var newBank = _mapper.Map<Bank>(data.Bank.Name);
+                var newBank = _mapper.Map<Bank>(data.Bank);
+                newBank.Id = Guid.NewGuid().ToString();
                 await _unitOfWork.Banks.AddAsync(newBank);
+                data.BankId = newBank.Id;
             }
 
+            var wallet = new Wallet() { Id = Guid.NewGuid().ToString(), Name = "Test", UserId = Guid.NewGuid().ToString() };
+            await _unitOfWork.Wallets.AddAsync(wallet);
+
             var virtualAcct = _mapper.Map<VirtualAccount>(data);
+            virtualAcct.WalletId = wallet.Id;
             await _unitOfWork.VirtualAccounts.AddAsync(virtualAcct);
 
             await _unitOfWork.Save();

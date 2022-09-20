@@ -8,8 +8,8 @@ namespace Payment.Domain.Models
         public decimal Balance { get; set; }
         public string UserId { get; set; } = null!;
 
-        public VirtualAccount VirtualAccount { get; set; } = null!;
-        public ICollection<Transaction> Transactions { get; set; } = null!;
-        public ICollection<TransferBeneficiary> Beneficiaries { get; set; } = null!;
+        public VirtualAccount? VirtualAccount { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; }
+        public ICollection<TransferBeneficiary>? Beneficiaries { get; set; }
     }
 }
