@@ -75,11 +75,15 @@ namespace Payment.Infrastructure.ExternalServices
                     if (virtualAccountResponse.Status)
                     {
                         return ResponseDto<object>.Success
-                            ("Wallet successfully created", new { WalletId = walletId, CreatedVirtualAccount = true }, 201);
+                            ("Wallet successfully created", 
+                            new { WalletId = walletId, PaystackCustomerCode = response.Data.CustomerCode, CreatedVirtualAccount = true }, 
+                            201);
                     }
 
                     return ResponseDto<object>.Success
-                        ("Wallet successfully created", new { WalletId = walletId, CreatedVirtualAccount = false }, 201);
+                        ("Wallet successfully created", 
+                        new { WalletId = walletId, PaystackCustomerCode = response.Data.CustomerCode,  CreatedVirtualAccount = false }, 
+                        201);
                 }
 
                 _logger.Error($"Could not create wallet: {response.Message}");
