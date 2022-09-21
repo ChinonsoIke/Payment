@@ -56,5 +56,12 @@ namespace Payment.Core.Utilities
                  .MaximumLength(25).WithMessage("State is limited to a maximum of 25 characters");
             return options;
         }
+        public static IRuleBuilder<T, string> IdGuidString<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            var options = ruleBuilder.Matches(@"^[a-z0-9]+-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]+$")
+                .WithMessage("Value passed does not match an ID property");
+            return options;
+        }
+
     }
 }
