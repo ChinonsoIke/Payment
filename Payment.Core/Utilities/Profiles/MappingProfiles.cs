@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Payment.Core.DTOs.PaystackDtos;
+using Payment.Core.DTOs.WalletDtos;
 using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Payment.Core.Utilities.Profiles
         {
             CreateMap<PaystackBankResponseData, Bank>();
             CreateMap<PaystackVirtualAccountResponseData, VirtualAccount>();
+            CreateMap<WalletRequestDto, Wallet>();
         }
     }
 }

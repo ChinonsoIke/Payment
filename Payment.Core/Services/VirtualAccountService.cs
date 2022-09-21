@@ -27,11 +27,7 @@ namespace Payment.Core.Services
                 data.BankId = newBank.Id;
             }
 
-            var wallet = new Wallet() { Id = Guid.NewGuid().ToString(), Name = "Test", UserId = Guid.NewGuid().ToString() };
-            await _unitOfWork.Wallets.AddAsync(wallet);
-
             var virtualAcct = _mapper.Map<VirtualAccount>(data);
-            virtualAcct.WalletId = wallet.Id;
             await _unitOfWork.VirtualAccounts.AddAsync(virtualAcct);
 
             await _unitOfWork.Save();
