@@ -7,6 +7,8 @@ namespace Payment.Domain.Models
         public string Name { get; set; } = null!;
         public decimal Balance { get; set; }
         public string UserId { get; set; } = null!;
+        public string Pin { get; set; } = null!;
+        public string CustomerCode { get; set; } = null!;
 
         public VirtualAccount? VirtualAccount { get; set; }
         public ICollection<Transaction>? Transactions { get; set; }
