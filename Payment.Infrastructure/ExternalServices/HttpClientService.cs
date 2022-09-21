@@ -34,7 +34,7 @@ namespace Payment.Infrastructure.ExternalServices
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<TRes>(responseString);
 
-            if(result != null && response.IsSuccessStatusCode)
+            if(result != null)
             {
                 return result;
             }
