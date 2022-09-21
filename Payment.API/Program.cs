@@ -23,6 +23,7 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerExtension();
+    builder.Services.AddSerilogExtension();
 
     builder.Services.AddPaymentInfrastructure(config);
     builder.Services.AddApplicationLayer();
