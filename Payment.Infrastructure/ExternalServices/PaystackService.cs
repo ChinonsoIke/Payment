@@ -96,7 +96,7 @@ namespace Payment.Infrastructure.ExternalServices
             CreateVirtualAccount(VirtualAccountRequestDto virtualAccountRequestDto)
         {
             var validation = await _virtualAccountRequestValidator.ValidateAsync(virtualAccountRequestDto);
-            if (!validation.IsValid)
+            if (!validation.IsValid) 
             {
                 return ResponseDto<PaystackVirtualAccountResponseData>.Fail("One or more of your inputs are incorrect", 400);
             }
