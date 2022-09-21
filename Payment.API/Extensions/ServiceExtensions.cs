@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Reflection;
 
 namespace Payment.API.Extensions
@@ -49,6 +50,11 @@ namespace Payment.API.Extensions
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+        }
+
+        public static void AddSerilogExtension(this IServiceCollection services)
+        {
+            services.AddSingleton(Log.Logger);
         }
     }
 }
