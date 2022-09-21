@@ -9,11 +9,11 @@ namespace Payment.API.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiController]
-    public class VirtualAccountController : ControllerBase
+    public class VirtualAccountsController : ControllerBase
     {
         private readonly IPaystackService _paystackService;
 
-        public VirtualAccountController(IPaystackService paystackService)
+        public VirtualAccountsController(IPaystackService paystackService)
         {
             _paystackService = paystackService;
         }
